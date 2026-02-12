@@ -1,0 +1,6 @@
+-- Tell busted where to find the test files
+return {
+  run = {
+    _DEFAULT = "spec"
+  }
+}
