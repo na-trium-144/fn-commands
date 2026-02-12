@@ -1,4 +1,28 @@
 describe("fn-commands", function()
+  it("should reset state on init", function()
+    local fn = require("fn-commands")
+
+    fn.Note(-3, 1, 3, false)
+
+    assert.are.same(1, #fn.state.notes)
+
+    -- Call init to reset the state
+    fn.init()
+
+    assert.are.same(0, #fn.state.notes)
+  end)
+  it("should always synchronize global fnState and module state", function()
+    local fn = require("fn-commands")
+
+    fn.Note(-3, 1, 3, false)
+
+    assert.is.equal(fn.state, fnState)
+
+    fn.init()
+
+    assert.is.equal(fn.state, fnState)
+  end)
+
   it("should generate the correct state for sample 102399.1", function()
     -- Load libraries
     local fn = require("fn-commands")
