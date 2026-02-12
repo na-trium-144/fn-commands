@@ -23,6 +23,7 @@ jobs:
         uses: leafo/gh-actions-luarocks@v4
       
       - name: Generate versioned rockspec
+        id: generate-rockspec
         run: |
           # Extract version from tag (e.g., v1.0.0 -> 1.0.0-1)
           TAG_NAME=${GITHUB_REF#refs/tags/}
@@ -32,15 +33,18 @@ jobs:
           sed "s/version = \"dev-1\"/version = \"$VERSION\"/" fn-commands-dev-1.rockspec > "fn-commands-$VERSION.rockspec"
           
           # Update source URL to point to the specific tag
-          sed -i "s|url = \"git+https://github.com/na-trium-144/fn-commands.git\"|url = \"git+https://github.com/na-trium-144/fn-commands.git\",\n   tag = \"$TAG_NAME\"|" "fn-commands-$VERSION.rockspec"
+          sed -i "s|url = \"git+https://github.com/na-trium-144/fn-commands.git\"|url = \"git+https://github.com/na-trium-144/fn-commands.git\",|" "fn-commands-$VERSION.rockspec"
+          sed -i "/url = \"git+https:\/\/github.com\/na-trium-144\/fn-commands.git\",/a\   tag = \"$TAG_NAME\"" "fn-commands-$VERSION.rockspec"
           
           echo "Generated rockspec: fn-commands-$VERSION.rockspec"
           cat "fn-commands-$VERSION.rockspec"
+          
+          # Set output for next step
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
       
       - name: Upload to LuaRocks
         env:
           LUAROCKS_API_KEY: ${{ secrets.LUAROCKS_API_KEY }}
         run: |
-          TAG_NAME=${GITHUB_REF#refs/tags/}
-          VERSION=${TAG_NAME#v}-1
+          VERSION="${{ steps.generate-rockspec.outputs.version }}"
           luarocks upload --api-key="$LUAROCKS_API_KEY" "fn-commands-$VERSION.rockspec"
