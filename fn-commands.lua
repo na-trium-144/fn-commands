@@ -58,8 +58,8 @@ end
 -- State Management (Initialization)
 -- ---------------------------------------------------------
 
-function M.fnNewState()
-  return {
+function M.init()
+  M.state = {
     notes = {},
     rest = {},
     signature = {},
@@ -71,8 +71,11 @@ function M.fnNewState()
       denominator = 1,
     },
   }
+  _G.fnState = M.state
 end
-M.fnState = M.fnNewState()
+_G.fnInit = M.init
+
+M.init()
 
 -- ---------------------------------------------------------
 -- Main Functions
@@ -94,12 +97,12 @@ function M.NoteStatic(line, hitX, hitVX, hitVY, big, fall)
     and type(big) == "boolean"
     and type(fall) == "boolean"
   then
-    table.insert(M.fnState.notes, {
+    table.insert(M.state.notes, {
       hitX = hitX,
       hitVX = hitVX,
       hitVY = hitVY,
       big = big,
-      step = copyStep(M.fnState.step),
+      step = copyStep(M.state.step),
       luaLine = line,
       fall = fall,
     })
@@ -127,13 +130,13 @@ function M.StepStatic(line, num, den)
       denominator = den,
     }
 
-    table.insert(M.fnState.rest, {
-      begin = copyStep(M.fnState.step),
+    table.insert(M.state.rest, {
+      begin = copyStep(M.state.step),
       duration = duration,
       luaLine = line,
     })
 
-    M.fnState.step = stepAdd(M.fnState.step, duration)
+    M.state.step = stepAdd(M.state.step, duration)
   else
     error("invalid argument for Step()")
   end
@@ -178,14 +181,14 @@ function M.BeatStatic(line, bars, offsetNum, offsetDen)
     and type(offsetDen) == "number"
     and offsetDen > 0
   then
-    table.insert(M.fnState.signature, {
+    table.insert(M.state.signature, {
       bars = bars,
       offset = stepSimplify({
         fourth = 0,
         numerator = offsetNum * 4,
         denominator = offsetDen,
       }),
-      step = copyStep(M.fnState.step),
+      step = copyStep(M.state.step),
       barNum = 0,
       luaLine = line,
     })
@@ -199,9 +202,9 @@ function M.BPM(bpm)
 end
 function M.BPMStatic(line, bpm)
   if (type(line) == "number" or line == nil) and type(bpm) == "number" and bpm > 0 then
-    table.insert(M.fnState.bpmChanges, {
+    table.insert(M.state.bpmChanges, {
       bpm = bpm,
-      step = copyStep(M.fnState.step),
+      step = copyStep(M.state.step),
       timeSec = 0,
       luaLine = line,
     })
@@ -215,9 +218,9 @@ function M.Accel(speed)
 end
 function M.AccelStatic(line, speed)
   if (type(line) == "number" or line == nil) and type(speed) == "number" then
-    table.insert(M.fnState.speedChanges, {
+    table.insert(M.state.speedChanges, {
       bpm = speed,
-      step = copyStep(M.fnState.step),
+      step = copyStep(M.state.step),
       timeSec = 0,
       luaLine = line,
       interp = false,
@@ -232,9 +235,9 @@ function M.AccelEnd(speed)
 end
 function M.AccelEndStatic(line, speed)
   if (type(line) == "number" or line == nil) and type(speed) == "number" then
-    table.insert(M.fnState.speedChanges, {
+    table.insert(M.state.speedChanges, {
       bpm = speed,
-      step = copyStep(M.fnState.step),
+      step = copyStep(M.state.step),
       timeSec = 0,
       luaLine = line,
       interp = true,
@@ -245,9 +248,6 @@ function M.AccelEndStatic(line, speed)
 end
 
 -- Setup Globals
-
-_G.fnState = M.fnState
-_G.fnNewState = M.fnNewState
 
 _G.Note = M.Note
 _G.NoteStatic = M.NoteStatic
