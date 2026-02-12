@@ -26,7 +26,7 @@ describe("fn-commands", function()
   it("should generate the correct state for sample 102399.1", function()
     -- Load libraries
     local fn = require("fn-commands")
-    local json = require("rxi-json-lua")
+    local json = require("lunajson")
 
     -- To ensure a clean state for the test, re-initialize the module.
     -- This resets the state table.

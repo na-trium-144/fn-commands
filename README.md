@@ -6,8 +6,7 @@ Falling Nikochan uses this library with Lua 5.4 internally, but it does not depe
 
 ## Running Tests
 
-Tests cannot run on Lua 5.4, because [rxi-json-lua](https://github.com/rxi/json.lua) does not support it.
-Use Lua 5.1, 5.2, or 5.3.
+Tests can run on Lua 5.1, 5.2, 5.3, or 5.4.
 
 ```bash
 luarocks test --local
