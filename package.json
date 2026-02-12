@@ -1,0 +1,22 @@
+{
+  "name": "fn-commands",
+  "version": "1.0.0",
+  "description": "Lua library for describing chart content of Falling Nikochan",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "na-trium-144",
+  "license": "MIT",
+  "files": [
+    "fn-commands.lua"
+  ],
+  "main": "fn-commands.lua",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/na-trium-144/fn-commands.git"
+  },
+  "bugs": {
+    "url": "https://github.com/na-trium-144/fn-commands/issues"
+  },
+  "homepage": "https://nikochan.utcode.net"
+}
