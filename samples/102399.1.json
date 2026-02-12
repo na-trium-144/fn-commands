@@ -1,0 +1,348 @@
+{
+  "notes": [
+    {
+      "hitX": -3,
+      "hitVX": 1,
+      "hitVY": 3,
+      "big": false,
+      "step": { "fourth": 16, "numerator": 0, "denominator": 1 },
+      "luaLine": null,
+      "fall": false
+    },
+    {
+      "hitX": -3,
+      "hitVX": 1,
+      "hitVY": 3,
+      "big": false,
+      "step": { "fourth": 17, "numerator": 1, "denominator": 2 },
+      "luaLine": null,
+      "fall": false
+    },
+    {
+      "hitX": -3,
+      "hitVX": 1,
+      "hitVY": 3,
+      "big": false,
+      "step": { "fourth": 19, "numerator": 0, "denominator": 1 },
+      "luaLine": null,
+      "fall": false
+    },
+    {
+      "hitX": -2,
+      "hitVX": 1,
+      "hitVY": 3,
+      "big": false,
+      "step": { "fourth": 20, "numerator": 0, "denominator": 1 },
+      "luaLine": null,
+      "fall": false
+    },
+    {
+      "hitX": -2,
+      "hitVX": 1,
+      "hitVY": 3,
+      "big": false,
+      "step": { "fourth": 21, "numerator": 1, "denominator": 2 },
+      "luaLine": null,
+      "fall": false
+    },
+    {
+      "hitX": -2,
+      "hitVX": 1,
+      "hitVY": 3,
+      "big": false,
+      "step": { "fourth": 23, "numerator": 0, "denominator": 1 },
+      "luaLine": null,
+      "fall": false
+    },
+    {
+      "hitX": -1,
+      "hitVX": 1,
+      "hitVY": 3,
+      "big": false,
+      "step": { "fourth": 24, "numerator": 0, "denominator": 1 },
+      "luaLine": null,
+      "fall": false
+    },
+    {
+      "hitX": -1,
+      "hitVX": 1,
+      "hitVY": 3,
+      "big": false,
+      "step": { "fourth": 25, "numerator": 1, "denominator": 2 },
+      "luaLine": null,
+      "fall": false
+    },
+    {
+      "hitX": -1,
+      "hitVX": 1,
+      "hitVY": 3,
+      "big": false,
+      "step": { "fourth": 27, "numerator": 0, "denominator": 1 },
+      "luaLine": null,
+      "fall": false
+    },
+    {
+      "hitX": 0,
+      "hitVX": 1,
+      "hitVY": 3,
+      "big": false,
+      "step": { "fourth": 28, "numerator": 0, "denominator": 1 },
+      "luaLine": null,
+      "fall": false
+    },
+    {
+      "hitX": 0,
+      "hitVX": 1,
+      "hitVY": 3,
+      "big": false,
+      "step": { "fourth": 29, "numerator": 1, "denominator": 2 },
+      "luaLine": null,
+      "fall": false
+    },
+    {
+      "hitX": 2,
+      "hitVX": 1,
+      "hitVY": 3,
+      "big": false,
+      "step": { "fourth": 30, "numerator": 1, "denominator": 2 },
+      "luaLine": null,
+      "fall": false
+    },
+    {
+      "hitX": 1,
+      "hitVX": 1,
+      "hitVY": 3,
+      "big": true,
+      "step": { "fourth": 32, "numerator": 0, "denominator": 1 },
+      "luaLine": 42,
+      "fall": false
+    },
+    {
+      "hitX": 1,
+      "hitVX": 1,
+      "hitVY": 3,
+      "big": false,
+      "step": { "fourth": 34, "numerator": 0, "denominator": 1 },
+      "luaLine": 47,
+      "fall": false
+    },
+    {
+      "hitX": -3,
+      "hitVX": 1,
+      "hitVY": 3,
+      "big": true,
+      "step": { "fourth": 36, "numerator": 0, "denominator": 1 },
+      "luaLine": 53,
+      "fall": false
+    },
+    {
+      "hitX": -1,
+      "hitVX": 1,
+      "hitVY": 3,
+      "big": false,
+      "step": { "fourth": 37, "numerator": 0, "denominator": 1 },
+      "luaLine": 55,
+      "fall": false
+    },
+    {
+      "hitX": 0,
+      "hitVX": 1,
+      "hitVY": 3,
+      "big": false,
+      "step": { "fourth": 37, "numerator": 1, "denominator": 2 },
+      "luaLine": 58,
+      "fall": false
+    },
+    {
+      "hitX": 1,
+      "hitVX": 1,
+      "hitVY": 3,
+      "big": true,
+      "step": { "fourth": 38, "numerator": 0, "denominator": 1 },
+      "luaLine": 61,
+      "fall": false
+    },
+    {
+      "hitX": 2,
+      "hitVX": 1,
+      "hitVY": 3,
+      "big": true,
+      "step": { "fourth": 39, "numerator": 0, "denominator": 1 },
+      "luaLine": 66,
+      "fall": false
+    }
+  ],
+  "rest": [
+    {
+      "begin": { "fourth": 0, "numerator": 0, "denominator": 1 },
+      "duration": { "fourth": 0, "numerator": 64, "denominator": 4 },
+      "luaLine": 4
+    },
+    {
+      "begin": { "fourth": 16, "numerator": 0, "denominator": 1 },
+      "duration": { "fourth": 0, "numerator": 12, "denominator": 8 },
+      "luaLine": 8
+    },
+    {
+      "begin": { "fourth": 17, "numerator": 1, "denominator": 2 },
+      "duration": { "fourth": 0, "numerator": 12, "denominator": 8 },
+      "luaLine": 10
+    },
+    {
+      "begin": { "fourth": 19, "numerator": 0, "denominator": 1 },
+      "duration": { "fourth": 0, "numerator": 8, "denominator": 8 },
+      "luaLine": 12
+    },
+    {
+      "begin": { "fourth": 20, "numerator": 0, "denominator": 1 },
+      "duration": { "fourth": 0, "numerator": 12, "denominator": 8 },
+      "luaLine": 8
+    },
+    {
+      "begin": { "fourth": 21, "numerator": 1, "denominator": 2 },
+      "duration": { "fourth": 0, "numerator": 12, "denominator": 8 },
+      "luaLine": 10
+    },
+    {
+      "begin": { "fourth": 23, "numerator": 0, "denominator": 1 },
+      "duration": { "fourth": 0, "numerator": 8, "denominator": 8 },
+      "luaLine": 12
+    },
+    {
+      "begin": { "fourth": 24, "numerator": 0, "denominator": 1 },
+      "duration": { "fourth": 0, "numerator": 12, "denominator": 8 },
+      "luaLine": 8
+    },
+    {
+      "begin": { "fourth": 25, "numerator": 1, "denominator": 2 },
+      "duration": { "fourth": 0, "numerator": 12, "denominator": 8 },
+      "luaLine": 10
+    },
+    {
+      "begin": { "fourth": 27, "numerator": 0, "denominator": 1 },
+      "duration": { "fourth": 0, "numerator": 8, "denominator": 8 },
+      "luaLine": 12
+    },
+    {
+      "begin": { "fourth": 28, "numerator": 0, "denominator": 1 },
+      "duration": { "fourth": 0, "numerator": 12, "denominator": 8 },
+      "luaLine": 15
+    },
+    {
+      "begin": { "fourth": 29, "numerator": 1, "denominator": 2 },
+      "duration": { "fourth": 0, "numerator": 8, "denominator": 8 },
+      "luaLine": 17
+    },
+    {
+      "begin": { "fourth": 30, "numerator": 1, "denominator": 2 },
+      "duration": { "fourth": 0, "numerator": 12, "denominator": 8 },
+      "luaLine": 19
+    },
+    {
+      "begin": { "fourth": 32, "numerator": 0, "denominator": 1 },
+      "duration": { "fourth": 0, "numerator": 4, "denominator": 4 },
+      "luaLine": 44
+    },
+    {
+      "begin": { "fourth": 33, "numerator": 0, "denominator": 1 },
+      "duration": { "fourth": 0, "numerator": 4, "denominator": 4 },
+      "luaLine": 46
+    },
+    {
+      "begin": { "fourth": 34, "numerator": 0, "denominator": 1 },
+      "duration": { "fourth": 0, "numerator": 12, "denominator": 8 },
+      "luaLine": 48
+    },
+    {
+      "begin": { "fourth": 35, "numerator": 1, "denominator": 2 },
+      "duration": { "fourth": 0, "numerator": 4, "denominator": 16 },
+      "luaLine": 50
+    },
+    {
+      "begin": { "fourth": 35, "numerator": 3, "denominator": 4 },
+      "duration": { "fourth": 0, "numerator": 4, "denominator": 16 },
+      "luaLine": 52
+    },
+    {
+      "begin": { "fourth": 36, "numerator": 0, "denominator": 1 },
+      "duration": { "fourth": 0, "numerator": 4, "denominator": 4 },
+      "luaLine": 54
+    },
+    {
+      "begin": { "fourth": 37, "numerator": 0, "denominator": 1 },
+      "duration": { "fourth": 0, "numerator": 4, "denominator": 8 },
+      "luaLine": 56
+    },
+    {
+      "begin": { "fourth": 37, "numerator": 1, "denominator": 2 },
+      "duration": { "fourth": 0, "numerator": 4, "denominator": 16 },
+      "luaLine": 59
+    },
+    {
+      "begin": { "fourth": 37, "numerator": 3, "denominator": 4 },
+      "duration": { "fourth": 0, "numerator": 4, "denominator": 16 },
+      "luaLine": 60
+    },
+    {
+      "begin": { "fourth": 38, "numerator": 0, "denominator": 1 },
+      "duration": { "fourth": 0, "numerator": 4, "denominator": 8 },
+      "luaLine": 62
+    },
+    {
+      "begin": { "fourth": 38, "numerator": 1, "denominator": 2 },
+      "duration": { "fourth": 0, "numerator": 4, "denominator": 16 },
+      "luaLine": 64
+    },
+    {
+      "begin": { "fourth": 38, "numerator": 3, "denominator": 4 },
+      "duration": { "fourth": 0, "numerator": 4, "denominator": 16 },
+      "luaLine": 65
+    },
+    {
+      "begin": { "fourth": 39, "numerator": 0, "denominator": 1 },
+      "duration": { "fourth": 0, "numerator": 4, "denominator": 4 },
+      "luaLine": 67
+    }
+  ],
+  "bpmChanges": [
+    {
+      "bpm": 170,
+      "step": { "fourth": 0, "numerator": 0, "denominator": 1 },
+      "timeSec": 0,
+      "luaLine": 1
+    }
+  ],
+  "speedChanges": [
+    {
+      "bpm": 170,
+      "step": { "fourth": 0, "numerator": 0, "denominator": 1 },
+      "timeSec": 0,
+      "luaLine": 2,
+      "interp": false
+    },
+    {
+      "bpm": -170,
+      "step": { "fourth": 32, "numerator": 0, "denominator": 1 },
+      "timeSec": 0,
+      "luaLine": 43,
+      "interp": false
+    },
+    {
+      "bpm": 170,
+      "step": { "fourth": 33, "numerator": 0, "denominator": 1 },
+      "timeSec": 0,
+      "luaLine": 45,
+      "interp": false
+    }
+  ],
+  "signature": [
+    {
+      "bars": [[4, 4, 4, 4]],
+      "offset": { "fourth": 0, "numerator": 0, "denominator": 1 },
+      "step": { "fourth": 0, "numerator": 0, "denominator": 1 },
+      "barNum": 0,
+      "luaLine": 3
+    }
+  ],
+  "step": { "fourth": 40, "numerator": 0, "denominator": 1 }
+}

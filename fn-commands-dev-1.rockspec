@@ -1,5 +1,6 @@
 package = "fn-commands"
 version = "dev-1"
+rockspec_format = "3.0"
 source = {
    url = "git+https://github.com/na-trium-144/fn-commands.git"
 }
@@ -13,6 +14,13 @@ description = {
 }
 dependencies = {
    "lua >= 5.1"
+}
+test_dependencies = {
+   "busted",
+   "rxi-json-lua"
+}
+test = {
+   type = "busted"
 }
 build = {
    type = "builtin",
