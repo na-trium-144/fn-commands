@@ -2,9 +2,7 @@
   "name": "fn-commands",
   "version": "1.0.0",
   "description": "Lua library for describing chart content of Falling Nikochan",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "author": "na-trium-144",
   "license": "MIT",
   "files": [
