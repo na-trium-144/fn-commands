@@ -17,7 +17,7 @@ dependencies = {
 }
 test_dependencies = {
    "busted",
-   "rxi-json-lua"
+   "lunajson"
 }
 test = {
    type = "busted"
