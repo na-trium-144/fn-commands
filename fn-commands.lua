@@ -1,5 +1,11 @@
 local M = {}
 
+-- should match with module version (the version in package.json and git tag)
+M.version = "1.0.0"
+
+-- should match with the latest chart version of Falling Nikochan API
+M.chartVersion = 14
+
 -- ---------------------------------------------------------
 -- Helper Functions
 -- ---------------------------------------------------------
@@ -83,7 +89,14 @@ M.init()
 
 -- parse chart file and return in ChartEdit format
 function M.chart(obj)
+  local thisMajor, thisMinor = string.match(M.version, "(%d+)%.(%d+)")
+  local objMajor, objMinor = string.match(obj.version, "(%d+)%.(%d+)")
+  if tonumber(objMajor) ~= tonumber(thisMajor) or tonumber(objMinor) > tonumber(thisMinor) then
+    error("fn-commands version " .. M.version .. " cannot load chart file version " .. obj.version)
+  end
   obj.falling = "nikochan"
+  obj.ver = M.chartVersion
+  obj.version = nil
   -- array -> NoteCommand9
   for i = 0, 9 do
     if obj.copyBuffer[i] then

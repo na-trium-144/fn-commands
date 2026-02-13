@@ -62,4 +62,16 @@ describe("fn-commands", function()
 
     assert.same(expected_table, actual_table)
   end)
+
+  it("should throw error for incompatible version", function()
+    local fn = require("fn-commands")
+
+    local incompatible_chart = {
+      version = "999.0",
+    }
+
+    assert.has_error(function()
+      fn.chart(incompatible_chart)
+    end, "fn-commands version " .. fn.version .. " cannot load chart file version " .. incompatible_chart.version)
+  end)
 end)
