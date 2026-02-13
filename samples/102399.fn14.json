@@ -1,0 +1,367 @@
+{
+  "falling": "nikochan",
+  "ver": 14,
+  "published": false,
+  "levelsMin": [
+    {
+      "name": "",
+      "type": "Single",
+      "unlisted": false,
+      "ytBegin": 0,
+      "ytEndSec": 10,
+      "ytEnd": "note",
+      "snapDivider": 4
+    },
+    {
+      "name": "",
+      "type": "Double",
+      "unlisted": false,
+      "ytBegin": 0,
+      "ytEndSec": 10,
+      "ytEnd": "note",
+      "snapDivider": 4
+    }
+  ],
+  "levelsFreeze": [
+    {
+      "notes": [
+        {
+          "step": { "fourth": 16, "numerator": 0, "denominator": 1 },
+          "big": false,
+          "hitX": -3,
+          "hitVX": 1,
+          "hitVY": 3,
+          "fall": false,
+          "luaLine": null
+        },
+        {
+          "step": { "fourth": 17, "numerator": 1, "denominator": 2 },
+          "big": false,
+          "hitX": -3,
+          "hitVX": 1,
+          "hitVY": 3,
+          "fall": false,
+          "luaLine": null
+        },
+        {
+          "step": { "fourth": 20, "numerator": 0, "denominator": 1 },
+          "big": false,
+          "hitX": -2,
+          "hitVX": 1,
+          "hitVY": 3,
+          "fall": false,
+          "luaLine": null
+        },
+        {
+          "step": { "fourth": 21, "numerator": 1, "denominator": 2 },
+          "big": false,
+          "hitX": -2,
+          "hitVX": 1,
+          "hitVY": 3,
+          "fall": false,
+          "luaLine": null
+        },
+        {
+          "step": { "fourth": 24, "numerator": 0, "denominator": 1 },
+          "big": false,
+          "hitX": -1,
+          "hitVX": 1,
+          "hitVY": 3,
+          "fall": false,
+          "luaLine": null
+        },
+        {
+          "step": { "fourth": 25, "numerator": 1, "denominator": 2 },
+          "big": false,
+          "hitX": -1,
+          "hitVX": 1,
+          "hitVY": 3,
+          "fall": false,
+          "luaLine": null
+        },
+        {
+          "step": { "fourth": 28, "numerator": 0, "denominator": 1 },
+          "big": false,
+          "hitX": 0,
+          "hitVX": 1,
+          "hitVY": 3,
+          "fall": false,
+          "luaLine": null
+        },
+        {
+          "step": { "fourth": 29, "numerator": 1, "denominator": 2 },
+          "big": false,
+          "hitX": 0,
+          "hitVX": 1,
+          "hitVY": 3,
+          "fall": false,
+          "luaLine": null
+        }
+      ],
+      "rest": [
+        {
+          "begin": { "fourth": 0, "numerator": 0, "denominator": 1 },
+          "duration": { "fourth": 0, "numerator": 64, "denominator": 4 },
+          "luaLine": null
+        },
+        {
+          "begin": { "fourth": 16, "numerator": 0, "denominator": 1 },
+          "duration": { "fourth": 0, "numerator": 12, "denominator": 8 },
+          "luaLine": null
+        },
+        {
+          "begin": { "fourth": 17, "numerator": 1, "denominator": 2 },
+          "duration": { "fourth": 0, "numerator": 20, "denominator": 8 },
+          "luaLine": null
+        },
+        {
+          "begin": { "fourth": 20, "numerator": 0, "denominator": 1 },
+          "duration": { "fourth": 0, "numerator": 12, "denominator": 8 },
+          "luaLine": null
+        },
+        {
+          "begin": { "fourth": 21, "numerator": 1, "denominator": 2 },
+          "duration": { "fourth": 0, "numerator": 20, "denominator": 8 },
+          "luaLine": null
+        },
+        {
+          "begin": { "fourth": 24, "numerator": 0, "denominator": 1 },
+          "duration": { "fourth": 0, "numerator": 12, "denominator": 8 },
+          "luaLine": null
+        },
+        {
+          "begin": { "fourth": 25, "numerator": 1, "denominator": 2 },
+          "duration": { "fourth": 0, "numerator": 20, "denominator": 8 },
+          "luaLine": null
+        },
+        {
+          "begin": { "fourth": 28, "numerator": 0, "denominator": 1 },
+          "duration": { "fourth": 0, "numerator": 12, "denominator": 8 },
+          "luaLine": null
+        },
+        {
+          "begin": { "fourth": 29, "numerator": 1, "denominator": 2 },
+          "duration": { "fourth": 0, "numerator": 20, "denominator": 8 },
+          "luaLine": null
+        }
+      ],
+      "bpmChanges": [
+        {
+          "step": { "fourth": 0, "numerator": 0, "denominator": 1 },
+          "bpm": 170,
+          "timeSec": 0,
+          "luaLine": null
+        }
+      ],
+      "speedChanges": [
+        {
+          "step": { "fourth": 0, "numerator": 0, "denominator": 1 },
+          "bpm": 120,
+          "interp": false,
+          "timeSec": 0,
+          "luaLine": null
+        }
+      ],
+      "signature": [
+        {
+          "step": { "fourth": 0, "numerator": 0, "denominator": 1 },
+          "offset": { "fourth": 0, "numerator": 0, "denominator": 1 },
+          "barNum": 0,
+          "bars": [[4, 4, 4, 4]],
+          "luaLine": null
+        }
+      ]
+    },
+    {
+      "notes": [
+        {
+          "step": { "fourth": 16, "numerator": 0, "denominator": 1 },
+          "big": false,
+          "hitX": -3,
+          "hitVX": 1,
+          "hitVY": 3,
+          "fall": false,
+          "luaLine": null
+        },
+        {
+          "step": { "fourth": 17, "numerator": 1, "denominator": 2 },
+          "big": false,
+          "hitX": -3,
+          "hitVX": 1,
+          "hitVY": 3,
+          "fall": false,
+          "luaLine": null
+        },
+        {
+          "step": { "fourth": 19, "numerator": 0, "denominator": 1 },
+          "big": false,
+          "hitX": -3,
+          "hitVX": 1,
+          "hitVY": 3,
+          "fall": false,
+          "luaLine": null
+        },
+        {
+          "step": { "fourth": 20, "numerator": 0, "denominator": 1 },
+          "big": false,
+          "hitX": -2,
+          "hitVX": 1,
+          "hitVY": 3,
+          "fall": false,
+          "luaLine": null
+        },
+        {
+          "step": { "fourth": 21, "numerator": 1, "denominator": 2 },
+          "big": false,
+          "hitX": -2,
+          "hitVX": 1,
+          "hitVY": 3,
+          "fall": false,
+          "luaLine": null
+        },
+        {
+          "step": { "fourth": 23, "numerator": 0, "denominator": 1 },
+          "big": false,
+          "hitX": -2,
+          "hitVX": 1,
+          "hitVY": 3,
+          "fall": false,
+          "luaLine": null
+        },
+        {
+          "step": { "fourth": 24, "numerator": 0, "denominator": 1 },
+          "big": false,
+          "hitX": -1,
+          "hitVX": 1,
+          "hitVY": 3,
+          "fall": false,
+          "luaLine": null
+        },
+        {
+          "step": { "fourth": 25, "numerator": 1, "denominator": 2 },
+          "big": false,
+          "hitX": -1,
+          "hitVX": 1,
+          "hitVY": 3,
+          "fall": false,
+          "luaLine": null
+        },
+        {
+          "step": { "fourth": 27, "numerator": 0, "denominator": 1 },
+          "big": false,
+          "hitX": -1,
+          "hitVX": 1,
+          "hitVY": 3,
+          "fall": false,
+          "luaLine": null
+        }
+      ],
+      "rest": [
+        {
+          "begin": { "fourth": 0, "numerator": 0, "denominator": 1 },
+          "duration": { "fourth": 0, "numerator": 64, "denominator": 4 },
+          "luaLine": null
+        },
+        {
+          "begin": { "fourth": 16, "numerator": 0, "denominator": 1 },
+          "duration": { "fourth": 0, "numerator": 12, "denominator": 8 },
+          "luaLine": null
+        },
+        {
+          "begin": { "fourth": 17, "numerator": 1, "denominator": 2 },
+          "duration": { "fourth": 0, "numerator": 12, "denominator": 8 },
+          "luaLine": null
+        },
+        {
+          "begin": { "fourth": 19, "numerator": 0, "denominator": 1 },
+          "duration": { "fourth": 0, "numerator": 8, "denominator": 8 },
+          "luaLine": null
+        },
+        {
+          "begin": { "fourth": 20, "numerator": 0, "denominator": 1 },
+          "duration": { "fourth": 0, "numerator": 12, "denominator": 8 },
+          "luaLine": null
+        },
+        {
+          "begin": { "fourth": 21, "numerator": 1, "denominator": 2 },
+          "duration": { "fourth": 0, "numerator": 12, "denominator": 8 },
+          "luaLine": null
+        },
+        {
+          "begin": { "fourth": 23, "numerator": 0, "denominator": 1 },
+          "duration": { "fourth": 0, "numerator": 8, "denominator": 8 },
+          "luaLine": null
+        },
+        {
+          "begin": { "fourth": 24, "numerator": 0, "denominator": 1 },
+          "duration": { "fourth": 0, "numerator": 12, "denominator": 8 },
+          "luaLine": null
+        },
+        {
+          "begin": { "fourth": 25, "numerator": 1, "denominator": 2 },
+          "duration": { "fourth": 0, "numerator": 12, "denominator": 8 },
+          "luaLine": null
+        },
+        {
+          "begin": { "fourth": 27, "numerator": 0, "denominator": 1 },
+          "duration": { "fourth": 0, "numerator": 8, "denominator": 8 },
+          "luaLine": null
+        }
+      ],
+      "bpmChanges": [
+        {
+          "step": { "fourth": 0, "numerator": 0, "denominator": 1 },
+          "bpm": 170,
+          "timeSec": 0,
+          "luaLine": null
+        }
+      ],
+      "speedChanges": [
+        {
+          "step": { "fourth": 0, "numerator": 0, "denominator": 1 },
+          "bpm": 170,
+          "interp": false,
+          "timeSec": 0,
+          "luaLine": null
+        }
+      ],
+      "signature": [
+        {
+          "step": { "fourth": 0, "numerator": 0, "denominator": 1 },
+          "offset": { "fourth": 0, "numerator": 0, "denominator": 1 },
+          "barNum": 0,
+          "bars": [[4, 4, 4, 4]],
+          "luaLine": null
+        }
+      ]
+    }
+  ],
+  "offset": 0.5,
+  "ytId": "kcuF1gta0fQ",
+  "title": "Get Started!",
+  "composer": "na-trium-144",
+  "chartCreator": "na-trium-144",
+  "changePasswd": null,
+  "locale": "",
+  "copyBuffer": [
+    {
+      "step": { "fourth": 0, "numerator": 0, "denominator": 1 },
+      "big": false,
+      "hitX": -3,
+      "hitVX": 1,
+      "hitVY": 3,
+      "fall": true,
+      "luaLine": null
+    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "zoom": 0
+}

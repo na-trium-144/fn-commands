@@ -46,4 +46,20 @@ describe("fn-commands", function()
     -- assert.same performs a deep, recursive comparison of the tables.
     assert.same(expected_table, fn.state)
   end)
+
+  it("should generate the correct chart data for sample 102399.fn14", function()
+    local json = require("lunajson")
+
+    local actual_table = dofile("./samples/102399.fn14.lua")
+
+    -- modified sample data of Chart14Edit
+    local expected_f = assert(io.open("./samples/102399.fn14.json", "r"))
+    local expected_json = expected_f:read("*a")
+    expected_f:close()
+    local expected_table = json.decode(expected_json)
+    expected_table.copyBuffer[0] = expected_table.copyBuffer[1]
+    expected_table.copyBuffer[1] = nil
+
+    assert.same(expected_table, actual_table)
+  end)
 end)
