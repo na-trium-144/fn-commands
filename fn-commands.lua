@@ -12,6 +12,10 @@ local function copyStep(s)
   }
 end
 
+local function stepZero()
+  return { fourth = 0, numerator = 0, denominator = 1 }
+end
+
 local function gcd(a, b)
   while b ~= 0 do
     a, b = b, a % b
@@ -76,6 +80,45 @@ end
 _G.fnInit = M.init
 
 M.init()
+
+-- parse chart file and return in ChartEdit format
+function M.chart(obj)
+  obj.falling = "nikochan"
+  -- array -> NoteCommand9
+  for i = 0, 9 do
+    if obj.copyBuffer[i] then
+      obj.copyBuffer[i] = {
+        hitX = obj.copyBuffer[i][1],
+        hitVX = obj.copyBuffer[i][2],
+        hitVY = obj.copyBuffer[i][3],
+        big = obj.copyBuffer[i][4],
+        fall = obj.copyBuffer[i][5],
+        step = stepZero(),
+        luaLine = nil,
+      }
+    end
+  end
+  obj.levelsFreeze = {}
+  for i = 1, #obj.levels do
+    M.init()
+    obj.levels[i].content()
+    table.insert(obj.levelsFreeze, {
+      notes = M.state.notes,
+      rest = M.state.rest,
+      bpmChanges = M.state.bpmChanges,
+      speedChanges = M.state.speedChanges,
+      signature = M.state.signature,
+    })
+    obj.levels[i].content = nil
+  end
+  obj.levelsMin = obj.levels
+  obj.levels = nil
+  obj.published = false
+  obj.locale = "" -- actually unused
+  -- obj.lua needs to be set manually.
+  return obj
+end
+_G.fnChart = M.chart
 
 -- ---------------------------------------------------------
 -- Main Functions
