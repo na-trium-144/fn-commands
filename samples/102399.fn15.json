@@ -1,8 +1,8 @@
 {
   "falling": "nikochan",
-  "ver": 14,
+  "ver": 15,
   "published": false,
-  "levelsMin": [
+  "levelsMeta": [
     {
       "name": "",
       "type": "Single",
@@ -343,25 +343,8 @@
   "chartCreator": "na-trium-144",
   "changePasswd": null,
   "locale": "",
-  "copyBuffer": [
-    {
-      "step": { "fourth": 0, "numerator": 0, "denominator": 1 },
-      "big": false,
-      "hitX": -3,
-      "hitVX": 1,
-      "hitVY": 3,
-      "fall": true,
-      "luaLine": null
-    },
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null
-  ],
+  "copyBuffer": {
+    "0": [-3, 1, 3, false, true]
+  },
   "zoom": 0
 }

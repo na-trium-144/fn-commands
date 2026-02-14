@@ -28,7 +28,7 @@ local M = {}
 M.version = "0.1.0"
 
 -- should match with the latest chart version of Falling Nikochan API
-M.chartVersion = 14
+M.chartVersion = 15
 
 local function fileVersionSupported(major, minor)
   local thisMajor, thisMinor = string.match(M.version, "(%d+)%.(%d+)")
@@ -125,20 +125,6 @@ function M.chart(obj)
   obj.falling = "nikochan"
   obj.ver = M.chartVersion
   obj.version = nil
-  -- array -> NoteCommand9
-  for i = 0, 9 do
-    if obj.copyBuffer[i] then
-      obj.copyBuffer[i] = {
-        hitX = obj.copyBuffer[i][1],
-        hitVX = obj.copyBuffer[i][2],
-        hitVY = obj.copyBuffer[i][3],
-        big = obj.copyBuffer[i][4],
-        fall = obj.copyBuffer[i][5],
-        step = stepZero(),
-        luaLine = nil,
-      }
-    end
-  end
   obj.levelsFreeze = {}
   for i = 1, #obj.levels do
     M.init()
@@ -152,7 +138,7 @@ function M.chart(obj)
     })
     obj.levels[i].content = nil
   end
-  obj.levelsMin = obj.levels
+  obj.levelsMeta = obj.levels
   obj.levels = nil
   obj.published = false
   obj.locale = "" -- actually unused
