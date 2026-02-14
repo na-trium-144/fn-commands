@@ -48,6 +48,7 @@ describe("fn-commands", function()
   end)
 
   it("should generate the correct chart data for sample 102399.fn14", function()
+    local fn = require("fn-commands")
     local json = require("lunajson")
 
     local actual_table = dofile("./samples/102399.fn14.lua")
@@ -57,6 +58,7 @@ describe("fn-commands", function()
     local expected_json = expected_f:read("*a")
     expected_f:close()
     local expected_table = json.decode(expected_json)
+    expected_table.ver = fn.chartVersion
     expected_table.copyBuffer[0] = expected_table.copyBuffer[1]
     expected_table.copyBuffer[1] = nil
 

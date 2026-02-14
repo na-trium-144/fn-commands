@@ -1,6 +1,6 @@
 require("fn-commands")
 return fnChart({
-  version = "1.0",
+  version = "0.1",
   offset = 0.5,
   ytId = "kcuF1gta0fQ",
   title = "Get Started!",
