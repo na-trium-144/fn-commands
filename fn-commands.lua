@@ -259,7 +259,6 @@ function M.BeatStatic(line, bars, offsetNum, offsetDen)
         denominator = offsetDen,
       }),
       step = copyStep(M.state.step),
-      barNum = 0,
       luaLine = line,
     })
   else
@@ -275,7 +274,6 @@ function M.BPMStatic(line, bpm)
     table.insert(M.state.bpmChanges, {
       bpm = bpm,
       step = copyStep(M.state.step),
-      timeSec = 0,
       luaLine = line,
     })
   else
@@ -291,7 +289,6 @@ function M.AccelStatic(line, speed)
     table.insert(M.state.speedChanges, {
       bpm = speed,
       step = copyStep(M.state.step),
-      timeSec = 0,
       luaLine = line,
       interp = false,
     })
@@ -308,7 +305,6 @@ function M.AccelEndStatic(line, speed)
     table.insert(M.state.speedChanges, {
       bpm = speed,
       step = copyStep(M.state.step),
-      timeSec = 0,
       luaLine = line,
       interp = true,
     })
