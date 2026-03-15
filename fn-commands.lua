@@ -25,7 +25,7 @@ SOFTWARE.
 local M = {}
 
 -- should match with module version (the version in package.json and git tag)
-M.version = "0.2.0"
+M.version = "0.3.0"
 
 -- should match with the latest chart version of Falling Nikochan API
 M.chartVersion = 15
