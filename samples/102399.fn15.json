@@ -149,7 +149,6 @@
         {
           "step": { "fourth": 0, "numerator": 0, "denominator": 1 },
           "bpm": 170,
-          "timeSec": 0,
           "luaLine": null
         }
       ],
@@ -158,7 +157,6 @@
           "step": { "fourth": 0, "numerator": 0, "denominator": 1 },
           "bpm": 120,
           "interp": false,
-          "timeSec": 0,
           "luaLine": null
         }
       ],
@@ -166,7 +164,6 @@
         {
           "step": { "fourth": 0, "numerator": 0, "denominator": 1 },
           "offset": { "fourth": 0, "numerator": 0, "denominator": 1 },
-          "barNum": 0,
           "bars": [[4, 4, 4, 4]],
           "luaLine": null
         }
@@ -312,7 +309,6 @@
         {
           "step": { "fourth": 0, "numerator": 0, "denominator": 1 },
           "bpm": 170,
-          "timeSec": 0,
           "luaLine": null
         }
       ],
@@ -321,7 +317,6 @@
           "step": { "fourth": 0, "numerator": 0, "denominator": 1 },
           "bpm": 170,
           "interp": false,
-          "timeSec": 0,
           "luaLine": null
         }
       ],
@@ -329,7 +324,6 @@
         {
           "step": { "fourth": 0, "numerator": 0, "denominator": 1 },
           "offset": { "fourth": 0, "numerator": 0, "denominator": 1 },
-          "barNum": 0,
           "bars": [[4, 4, 4, 4]],
           "luaLine": null
         }
