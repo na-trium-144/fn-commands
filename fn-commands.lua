@@ -25,14 +25,15 @@ SOFTWARE.
 local M = {}
 
 -- should match with module version (the version in package.json and git tag)
-M.version = "0.3.0"
+M.version = "1.0.0"
 
 -- should match with the latest chart version of Falling Nikochan API
 M.chartVersion = 15
 
 local function fileVersionSupported(major, minor)
   local thisMajor, thisMinor = string.match(M.version, "(%d+)%.(%d+)")
-  return tonumber(major) == tonumber(thisMajor) and tonumber(minor) <= tonumber(thisMinor)
+  return (tonumber(major) == tonumber(thisMajor) and tonumber(minor) <= tonumber(thisMinor))
+    or (tonumber(major) == 0 and tonumber(minor) >= 1)
 end
 
 -- ---------------------------------------------------------

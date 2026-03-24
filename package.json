@@ -1,6 +1,6 @@
 {
   "name": "fn-commands",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "description": "Lua library for describing chart content of Falling Nikochan",
   "scripts": {},
   "author": "na-trium-144",
