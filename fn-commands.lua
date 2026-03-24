@@ -284,6 +284,9 @@ end
 function M.Accel(speed)
   M.AccelStatic(nil, speed)
 end
+function M.AccelBegin(speed)
+  M.AccelStatic(nil, speed)
+end
 function M.AccelStatic(line, speed)
   if (type(line) == "number" or line == nil) and type(speed) == "number" then
     table.insert(M.state.speedChanges, {
@@ -295,6 +298,9 @@ function M.AccelStatic(line, speed)
   else
     error("invalid argument for Accel()")
   end
+end
+function M.AccelBeginStatic(speed)
+  M.AccelStatic(nil, speed)
 end
 
 function M.AccelEnd(speed)
@@ -325,6 +331,8 @@ _G.BPM = M.BPM
 _G.BPMStatic = M.BPMStatic
 _G.Accel = M.Accel
 _G.AccelStatic = M.AccelStatic
+_G.AccelBegin = M.AccelBegin
+_G.AccelBeginStatic = M.AccelBeginStatic
 _G.AccelEnd = M.AccelEnd
 _G.AccelEndStatic = M.AccelEndStatic
 
