@@ -299,8 +299,8 @@ function M.AccelStatic(line, speed)
     error("invalid argument for Accel()")
   end
 end
-function M.AccelBeginStatic(speed)
-  M.AccelStatic(nil, speed)
+function M.AccelBeginStatic(line, speed)
+  M.AccelStatic(line, speed)
 end
 
 function M.AccelEnd(speed)
