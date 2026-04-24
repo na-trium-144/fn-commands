@@ -77,3 +77,8 @@ Please insert the `lua` field as shown below, using a regular expression to extr
 ```bash
 luarocks test --local
 ```
+
+## Contributing
+
+Refer to the contributing instructions for the [falling-nikochan repository](https://github.com/na-trium-144/falling-nikochan).
+Please create any issues in that repository.
