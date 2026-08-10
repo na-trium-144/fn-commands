@@ -1,3 +1,8 @@
+## ver. 1.1.0 - 2026/08/10
+
+* Add contributing instructions to README
+* Chartバージョンを17に更新 (Chart形式の変更なし)
+
 ## ver. 1.0.0 - 2026/03/25
 
 * AccelBeginを追加
