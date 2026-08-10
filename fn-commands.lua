@@ -28,7 +28,7 @@ local M = {}
 M.version = "1.0.0"
 
 -- should match with the latest chart version of Falling Nikochan API
-M.chartVersion = 15
+M.chartVersion = 17
 
 local function fileVersionSupported(major, minor)
   local thisMajor, thisMinor = string.match(M.version, "(%d+)%.(%d+)")
