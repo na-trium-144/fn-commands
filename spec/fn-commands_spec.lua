@@ -47,14 +47,14 @@ describe("fn-commands", function()
     assert.same(expected_table, fn.state)
   end)
 
-  it("should generate the correct chart data for sample 102399.fn14", function()
+  it("should generate the correct chart data for sample 102399.fn17", function()
     local fn = require("fn-commands")
     local json = require("lunajson")
 
-    local actual_table = dofile("./samples/102399.fn15.lua")
+    local actual_table = dofile("./samples/102399.fn.lua")
 
     -- modified sample data of Chart14Edit
-    local expected_f = assert(io.open("./samples/102399.fn15.json", "r"))
+    local expected_f = assert(io.open("./samples/102399.fn17.json", "r"))
     local expected_json = expected_f:read("*a")
     expected_f:close()
     local expected_table = json.decode(expected_json)
