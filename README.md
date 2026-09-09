@@ -44,7 +44,7 @@ return fnChart({
 })
 ```
 
-Executing this will give you data that matches [the Chart15 format used by the /api/chartFile API](https://nikochan.utcode.net/api#POST/chartFile/%7Bcid%7D), except that the `lua` field is missing.
+Executing this will give you data that matches [the latest Chart format used by the /api/chartFile API](https://nikochan.utcode.net/api#POST/chartFile/%7Bcid%7D), except that the `lua` field is missing.
 Please insert the `lua` field as shown below, using a regular expression to extract the content portion of the original code:
 
 ```js
