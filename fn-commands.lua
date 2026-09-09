@@ -103,10 +103,7 @@ local function stepSub(s1, s2)
 end
 
 local function stepCmp(s1, s2)
-  if
-    s1.fourth == s2.fourth
-    and s1.numerator * s2.denominator == s1.denominator * s2.numerator
-  then
+  if s1.fourth == s2.fourth and s1.numerator * s2.denominator == s1.denominator * s2.numerator then
     return 0
   else
     local diff = stepToFloat(s1) - stepToFloat(s2)
@@ -160,8 +157,7 @@ local function getTimeSec(bpmChanges, step)
   local idx = findBpmIndexFromStep(bpmChanges, step)
   local targetBpmChange = (idx > 0 and bpmChanges[idx]) or defaultBpmChange()
   local targetTimeSec = targetBpmChange.timeSec or 0
-  return targetTimeSec
-    + (60 / targetBpmChange.bpm) * (stepToFloat(step) - stepToFloat(targetBpmChange.step))
+  return targetTimeSec + (60 / targetBpmChange.bpm) * (stepToFloat(step) - stepToFloat(targetBpmChange.step))
 end
 
 local function round(x)
@@ -172,8 +168,7 @@ local function getStep(bpmChanges, timeSec, denominator)
   local idx = findBpmIndexFromSec(bpmChanges, timeSec)
   local targetBpmChange = (idx > 0 and bpmChanges[idx]) or defaultBpmChange()
   local targetTimeSec = targetBpmChange.timeSec or 0
-  local stepFloat = stepToFloat(targetBpmChange.step)
-    + (timeSec - targetTimeSec) / (60 / targetBpmChange.bpm)
+  local stepFloat = stepToFloat(targetBpmChange.step) + (timeSec - targetTimeSec) / (60 / targetBpmChange.bpm)
   local num = round(stepFloat * denominator)
   return {
     fourth = math.floor(num / denominator),

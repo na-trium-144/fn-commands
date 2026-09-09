@@ -99,10 +99,22 @@ describe("fn-commands", function()
     end)
 
     it("should export stepSimplify", function()
-      assert.same({ fourth = 1, numerator = 0, denominator = 1 }, fn.stepSimplify({ fourth = 0, numerator = 4, denominator = 4 }))
-      assert.same({ fourth = 1, numerator = 3, denominator = 4 }, fn.stepSimplify({ fourth = 1, numerator = 6, denominator = 8 }))
-      assert.same({ fourth = 0, numerator = 0, denominator = 1 }, fn.stepSimplify({ fourth = 0, numerator = 0, denominator = 8 }))
-      assert.same({ fourth = 3, numerator = 1, denominator = 2 }, fn.stepSimplify({ fourth = 1, numerator = 5, denominator = 2 }))
+      assert.same(
+        { fourth = 1, numerator = 0, denominator = 1 },
+        fn.stepSimplify({ fourth = 0, numerator = 4, denominator = 4 })
+      )
+      assert.same(
+        { fourth = 1, numerator = 3, denominator = 4 },
+        fn.stepSimplify({ fourth = 1, numerator = 6, denominator = 8 })
+      )
+      assert.same(
+        { fourth = 0, numerator = 0, denominator = 1 },
+        fn.stepSimplify({ fourth = 0, numerator = 0, denominator = 8 })
+      )
+      assert.same(
+        { fourth = 3, numerator = 1, denominator = 2 },
+        fn.stepSimplify({ fourth = 1, numerator = 5, denominator = 2 })
+      )
     end)
 
     it("should export stepAdd", function()
