@@ -52,6 +52,10 @@ local function stepZero()
   return { fourth = 0, numerator = 0, denominator = 1 }
 end
 
+local function stepToFloat(s)
+  return s.fourth + s.numerator / s.denominator
+end
+
 local function gcd(a, b)
   while b ~= 0 do
     a, b = b, a % b
@@ -66,8 +70,8 @@ local function stepSimplify(s)
 
   if s.numerator > 0 then
     local common = gcd(s.numerator, s.denominator)
-    s.numerator = s.numerator / common
-    s.denominator = s.denominator / common
+    s.numerator = math.floor(s.numerator / common)
+    s.denominator = math.floor(s.denominator / common)
   end
 
   if s.numerator == 0 then
@@ -90,9 +94,106 @@ local function stepAdd(s1, s2)
   return stepSimplify(sa)
 end
 
+local function stepSub(s1, s2)
+  return stepAdd(s1, {
+    fourth = -s2.fourth,
+    numerator = -s2.numerator,
+    denominator = s2.denominator,
+  })
+end
+
+local function stepCmp(s1, s2)
+  if
+    s1.fourth == s2.fourth
+    and s1.numerator * s2.denominator == s1.denominator * s2.numerator
+  then
+    return 0
+  else
+    local diff = stepToFloat(s1) - stepToFloat(s2)
+    if diff > 0 then
+      return 1
+    elseif diff < 0 then
+      return -1
+    else
+      return 0
+    end
+  end
+end
+
+local function defaultBpmChange()
+  return { bpm = 120, step = stepZero(), timeSec = 0, luaLine = nil }
+end
+
+local function findBpmIndexFromStep(bpmChanges, step)
+  if bpmChanges == nil or #bpmChanges == 0 then
+    return 0
+  end
+  for i, ch in ipairs(bpmChanges) do
+    if stepCmp(step, ch.step) < 0 then
+      if i == 1 then
+        return 1
+      else
+        return i - 1
+      end
+    end
+  end
+  return #bpmChanges
+end
+
+local function findBpmIndexFromSec(bpmChanges, timeSec)
+  if bpmChanges == nil or #bpmChanges == 0 then
+    return 0
+  end
+  for i, ch in ipairs(bpmChanges) do
+    if timeSec < (ch.timeSec or 0) then
+      if i == 1 then
+        return 1
+      else
+        return i - 1
+      end
+    end
+  end
+  return #bpmChanges
+end
+
+local function getTimeSec(bpmChanges, step)
+  local idx = findBpmIndexFromStep(bpmChanges, step)
+  local targetBpmChange = (idx > 0 and bpmChanges[idx]) or defaultBpmChange()
+  local targetTimeSec = targetBpmChange.timeSec or 0
+  return targetTimeSec
+    + (60 / targetBpmChange.bpm) * (stepToFloat(step) - stepToFloat(targetBpmChange.step))
+end
+
+local function round(x)
+  return math.floor(x + 0.5)
+end
+
+local function getStep(bpmChanges, timeSec, denominator)
+  local idx = findBpmIndexFromSec(bpmChanges, timeSec)
+  local targetBpmChange = (idx > 0 and bpmChanges[idx]) or defaultBpmChange()
+  local targetTimeSec = targetBpmChange.timeSec or 0
+  local stepFloat = stepToFloat(targetBpmChange.step)
+    + (timeSec - targetTimeSec) / (60 / targetBpmChange.bpm)
+  local num = round(stepFloat * denominator)
+  return {
+    fourth = math.floor(num / denominator),
+    numerator = num % denominator,
+    denominator = denominator,
+  }
+end
+
 local function isInteger(n)
   return type(n) == "number" and math.floor(n) == n
 end
+
+-- Export utility functions
+M.stepZero = stepZero
+M.stepCmp = stepCmp
+M.stepSub = stepSub
+M.stepAdd = stepAdd
+M.stepSimplify = stepSimplify
+M.getTimeSec = getTimeSec
+M.getStep = getStep
 
 -- ---------------------------------------------------------
 -- State Management (Initialization)
@@ -110,6 +211,7 @@ function M.init()
       numerator = 0,
       denominator = 1,
     },
+    timeSec = 0,
   }
   _G.fnState = M.state
 end
@@ -174,6 +276,7 @@ function M.NoteStatic(line, hitX, hitVX, hitVY, big, fall)
       hitVY = hitVY,
       big = big,
       step = copyStep(M.state.step),
+      timeSec = M.state.timeSec,
       luaLine = line,
       fall = fall,
     })
@@ -207,7 +310,14 @@ function M.StepStatic(line, num, den)
       luaLine = line,
     })
 
+    local currentBpm = 120
+    if #M.state.bpmChanges > 0 then
+      currentBpm = M.state.bpmChanges[#M.state.bpmChanges].bpm
+    end
+    local durationSec = ((num * 4) / den) * (60 / currentBpm)
+
     M.state.step = stepAdd(M.state.step, duration)
+    M.state.timeSec = M.state.timeSec + durationSec
   else
     error("invalid argument for Step()")
   end
@@ -275,6 +385,7 @@ function M.BPMStatic(line, bpm)
     table.insert(M.state.bpmChanges, {
       bpm = bpm,
       step = copyStep(M.state.step),
+      timeSec = M.state.timeSec,
       luaLine = line,
     })
   else
@@ -293,6 +404,7 @@ function M.AccelStatic(line, speed)
     table.insert(M.state.speedChanges, {
       bpm = speed,
       step = copyStep(M.state.step),
+      timeSec = M.state.timeSec,
       luaLine = line,
       interp = false,
     })
@@ -312,6 +424,7 @@ function M.AccelEndStatic(line, speed)
     table.insert(M.state.speedChanges, {
       bpm = speed,
       step = copyStep(M.state.step),
+      timeSec = M.state.timeSec,
       luaLine = line,
       interp = true,
     })

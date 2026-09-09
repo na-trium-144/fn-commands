@@ -72,6 +72,22 @@ Please insert the `lua` field as shown below, using a regular expression to extr
   - You can specify a beat count offset ( a / b ) after the beat.
   a is an integer 0 or greater, and b is an integer 1 or greater.
 
+### Utility Functions
+
+These functions are exported by the module returned by `require("fn-commands")` (they are not registered to the global `_G` table).
+
+```lua
+local fn = require("fn-commands")
+```
+
+- `fn.stepZero()`: Returns a zero step `{ fourth = 0, numerator = 0, denominator = 1 }`.
+- `fn.stepSimplify(s)`: Simplifies a step `{ fourth, numerator, denominator }` into its irreducible form where `0 <= numerator < denominator`.
+- `fn.stepAdd(s1, s2)`: Adds two step objects `s1` and `s2`, returning a simplified step.
+- `fn.stepSub(s1, s2)`: Subtracts `s2` from `s1` (`s1 - s2`), returning a simplified step.
+- `fn.stepCmp(s1, s2)`: Compares two step objects. Returns `1` if `s1 > s2`, `0` if `s1 == s2`, and `-1` if `s1 < s2`.
+- `fn.getTimeSec(bpmChanges, step)`: Calculates the timestamp in seconds corresponding to a `step` based on an array of `bpmChanges`.
+- `fn.getStep(bpmChanges, timeSec, denominator)`: Converts a `timeSec` in seconds to a step with the specified `denominator` based on an array of `bpmChanges`.
+
 ## Running Tests
 
 ```bash
