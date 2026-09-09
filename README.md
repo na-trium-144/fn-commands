@@ -72,13 +72,21 @@ Please insert the `lua` field as shown below, using a regular expression to extr
   - You can specify a beat count offset ( a / b ) after the beat.
   a is an integer 0 or greater, and b is an integer 1 or greater.
 
-## Running Tests
+## Contributing
 
+- Format the code with [StyLua](https://github.com/JohnnyMorganz/StyLua):
+```bash
+stylua .
+```
+- Run tests:
 ```bash
 luarocks test --local
 ```
+- To run falling-nikochan's tests using local fn-commands:
+```bash
+# in falling-nikochan root directory
+pnpm link /absolute/path/to/fn-commands
+pnpm run --filter chart test
+```
 
-## Contributing
-
-Refer to the contributing instructions for the [falling-nikochan repository](https://github.com/na-trium-144/falling-nikochan).
-Please create any issues in that repository.
+Please create any issues in [falling-nikochan repository](https://github.com/na-trium-144/falling-nikochan).
