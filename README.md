@@ -88,13 +88,21 @@ local fn = require("fn-commands")
 - `fn.getTimeSec(bpmChanges, step)`: Calculates the timestamp in seconds corresponding to a `step` based on an array of `bpmChanges`.
 - `fn.getStep(bpmChanges, timeSec, denominator)`: Converts a `timeSec` in seconds to a step with the specified `denominator` based on an array of `bpmChanges`.
 
-## Running Tests
+## Contributing
 
+- Format the code with [StyLua](https://github.com/JohnnyMorganz/StyLua):
+```bash
+stylua .
+```
+- Run tests:
 ```bash
 luarocks test --local
 ```
+- To run falling-nikochan's tests using local fn-commands:
+```bash
+# in falling-nikochan root directory
+pnpm link /absolute/path/to/fn-commands
+pnpm run --filter chart test
+```
 
-## Contributing
-
-Refer to the contributing instructions for the [falling-nikochan repository](https://github.com/na-trium-144/falling-nikochan).
-Please create any issues in that repository.
+Please create any issues in [falling-nikochan repository](https://github.com/na-trium-144/falling-nikochan).
