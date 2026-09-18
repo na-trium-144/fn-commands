@@ -52,6 +52,10 @@ local function stepZero()
   return { fourth = 0, numerator = 0, denominator = 1 }
 end
 
+local function stepToFloat(s)
+  return s.fourth + s.numerator / s.denominator
+end
+
 local function gcd(a, b)
   while b ~= 0 do
     a, b = b, a % b
@@ -90,8 +94,49 @@ local function stepAdd(s1, s2)
   return stepSimplify(sa)
 end
 
+local function stepCmp(s1, s2)
+  if s1.fourth == s2.fourth and s1.numerator * s2.denominator == s1.denominator * s2.numerator then
+    return 0
+  else
+    local diff = stepToFloat(s1) - stepToFloat(s2)
+    if diff > 0 then
+      return 1
+    elseif diff < 0 then
+      return -1
+    else
+      return 0
+    end
+  end
+end
+
 local function isInteger(n)
   return type(n) == "number" and math.floor(n) == n
+end
+
+-- ---------------------------------------------------------
+-- Coroutine Helpers
+-- ---------------------------------------------------------
+
+local function isInsideCoroutine()
+  local co, isMain = coroutine.running()
+  return co ~= nil and not isMain
+end
+
+local function getCurrentCoroutineIndex()
+  local co, isMain = coroutine.running()
+  if co == nil or isMain then
+    return nil
+  end
+  if M.state.coroutines == nil then
+    M.state.coroutines = {}
+  end
+  for i, c in ipairs(M.state.coroutines) do
+    if c == co then
+      return i
+    end
+  end
+  table.insert(M.state.coroutines, co)
+  return #M.state.coroutines
 end
 
 -- ---------------------------------------------------------
@@ -105,6 +150,7 @@ function M.init()
     signature = {},
     bpmChanges = {},
     speedChanges = {},
+    coroutines = nil,
     step = {
       fourth = 0,
       numerator = 0,
@@ -168,7 +214,7 @@ function M.NoteStatic(line, hitX, hitVX, hitVY, big, fall)
     and type(big) == "boolean"
     and type(fall) == "boolean"
   then
-    table.insert(M.state.notes, {
+    local noteObj = {
       hitX = hitX,
       hitVX = hitVX,
       hitVY = hitVY,
@@ -176,7 +222,12 @@ function M.NoteStatic(line, hitX, hitVX, hitVY, big, fall)
       step = copyStep(M.state.step),
       luaLine = line,
       fall = fall,
-    })
+    }
+    local coIdx = getCurrentCoroutineIndex()
+    if coIdx ~= nil then
+      noteObj.coroutine = coIdx
+    end
+    table.insert(M.state.notes, noteObj)
   else
     error("invalid argument for Note()")
   end
@@ -201,13 +252,36 @@ function M.StepStatic(line, num, den)
       denominator = den,
     }
 
-    table.insert(M.state.rest, {
-      begin = copyStep(M.state.step),
-      duration = duration,
-      luaLine = line,
-    })
+    local currentBpm = 120
+    if #M.state.bpmChanges > 0 then
+      currentBpm = M.state.bpmChanges[#M.state.bpmChanges].bpm
+    end
 
-    M.state.step = stepAdd(M.state.step, duration)
+    if isInsideCoroutine() then
+      local coIdx = getCurrentCoroutineIndex()
+      local beginStep = copyStep(M.state.step)
+      local targetStep = stepAdd(beginStep, duration)
+
+      coroutine.yield(targetStep)
+
+      local restObj = {
+        begin = beginStep,
+        duration = duration,
+        luaLine = line,
+        coroutine = coIdx,
+      }
+      table.insert(M.state.rest, restObj)
+
+      M.state.step = copyStep(targetStep)
+    else
+      table.insert(M.state.rest, {
+        begin = copyStep(M.state.step),
+        duration = duration,
+        luaLine = line,
+      })
+
+      M.state.step = stepAdd(M.state.step, duration)
+    end
   else
     error("invalid argument for Step()")
   end
@@ -290,12 +364,17 @@ function M.AccelBegin(speed)
 end
 function M.AccelStatic(line, speed)
   if (type(line) == "number" or line == nil) and type(speed) == "number" then
-    table.insert(M.state.speedChanges, {
+    local speedObj = {
       bpm = speed,
       step = copyStep(M.state.step),
       luaLine = line,
       interp = false,
-    })
+    }
+    local coIdx = getCurrentCoroutineIndex()
+    if coIdx ~= nil then
+      speedObj.coroutine = coIdx
+    end
+    table.insert(M.state.speedChanges, speedObj)
   else
     error("invalid argument for Accel()")
   end
@@ -309,14 +388,77 @@ function M.AccelEnd(speed)
 end
 function M.AccelEndStatic(line, speed)
   if (type(line) == "number" or line == nil) and type(speed) == "number" then
-    table.insert(M.state.speedChanges, {
+    local speedObj = {
       bpm = speed,
       step = copyStep(M.state.step),
       luaLine = line,
       interp = true,
-    })
+    }
+    local coIdx = getCurrentCoroutineIndex()
+    if coIdx ~= nil then
+      speedObj.coroutine = coIdx
+    end
+    table.insert(M.state.speedChanges, speedObj)
   else
     error("invalid argument for Accel()") -- 元コードのエラーメッセージに準拠
+  end
+end
+
+function M.Concurrently(...)
+  local n = select("#", ...)
+  local funcs = { ... }
+  for i = 1, n do
+    if type(funcs[i]) ~= "function" then
+      error("invalid argument for Concurrently()")
+    end
+  end
+  if n == 0 then
+    return
+  end
+
+  local tasks = {}
+  for i = 1, n do
+    local co = coroutine.create(funcs[i])
+    table.insert(tasks, {
+      co = co,
+      nextStep = copyStep(M.state.step),
+      index = i,
+    })
+  end
+
+  while true do
+    local bestTask = nil
+    for _, task in ipairs(tasks) do
+      if coroutine.status(task.co) ~= "dead" then
+        if bestTask == nil then
+          bestTask = task
+        else
+          local cmp = stepCmp(task.nextStep, bestTask.nextStep)
+          if cmp < 0 then
+            bestTask = task
+          elseif cmp == 0 then
+            if task.index < bestTask.index then
+              bestTask = task
+            end
+          end
+        end
+      end
+    end
+
+    if bestTask == nil then
+      break
+    end
+
+    local ok, res = coroutine.resume(bestTask.co)
+    if not ok then
+      error(res)
+    end
+
+    if coroutine.status(bestTask.co) ~= "dead" then
+      if type(res) == "table" and res.fourth ~= nil and res.numerator ~= nil and res.denominator ~= nil then
+        bestTask.nextStep = copyStep(res)
+      end
+    end
   end
 end
 
@@ -336,5 +478,6 @@ _G.AccelBegin = M.AccelBegin
 _G.AccelBeginStatic = M.AccelBeginStatic
 _G.AccelEnd = M.AccelEnd
 _G.AccelEndStatic = M.AccelEndStatic
+_G.Concurrently = M.Concurrently
 
 return M

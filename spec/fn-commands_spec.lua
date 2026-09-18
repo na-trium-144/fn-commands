@@ -74,4 +74,281 @@ describe("fn-commands", function()
       fn.chart(incompatible_chart)
     end, "fn-commands version " .. fn.version .. " cannot load chart file version " .. incompatible_chart.version)
   end)
+
+  describe("Concurrently and coroutines", function()
+    local fn = require("fn-commands")
+
+    it("should export Concurrently to fn and _G", function()
+      assert.is_function(fn.Concurrently)
+      assert.is_function(_G.Concurrently)
+      assert.is.equal(fn.Concurrently, _G.Concurrently)
+    end)
+
+    it("should run the example flow with 2 concurrent tracks correctly", function()
+      fn.init()
+      Concurrently(
+        function()
+          -- Coroutine 1
+          Note(-3, 1, 3, false) -- (1) step=0
+          Step(1, 1) -- (2) step=0 -> 4 (4 fourths = 1 whole)
+          Note(-2, 1, 3, false) -- (3) step=4
+        end,
+        function()
+          -- Coroutine 2
+          Note(3, -1, 3, false) -- (4) step=0
+          Step(1, 2) -- (5) step=0 -> 2 (2 fourths = 1/2)
+          Note(2, -1, 3, false) -- (6) step=2
+        end
+      )
+
+      assert.same({ fourth = 4, numerator = 0, denominator = 1 }, fn.state.step)
+
+      -- Notes check:
+      -- Order of additions: (1) at step 0 co 1, (4) at step 0 co 2, (6) at step 2 co 2, (3) at step 4 co 1
+      assert.are.equal(4, #fn.state.notes)
+
+      assert.are.equal(-3, fn.state.notes[1].hitX)
+      assert.same({ fourth = 0, numerator = 0, denominator = 1 }, fn.state.notes[1].step)
+      assert.are.equal(1, fn.state.notes[1].coroutine)
+
+      assert.are.equal(3, fn.state.notes[2].hitX)
+      assert.same({ fourth = 0, numerator = 0, denominator = 1 }, fn.state.notes[2].step)
+      assert.are.equal(2, fn.state.notes[2].coroutine)
+
+      assert.are.equal(2, fn.state.notes[3].hitX)
+      assert.same({ fourth = 2, numerator = 0, denominator = 1 }, fn.state.notes[3].step)
+      assert.are.equal(2, fn.state.notes[3].coroutine)
+
+      assert.are.equal(-2, fn.state.notes[4].hitX)
+      assert.same({ fourth = 4, numerator = 0, denominator = 1 }, fn.state.notes[4].step)
+      assert.are.equal(1, fn.state.notes[4].coroutine)
+
+      -- Rest check:
+      -- co 2 finishes Step(1, 2) first -> rest 1 (co 2)
+      -- co 1 finishes Step(1, 1) next -> rest 2 (co 1)
+      assert.are.equal(2, #fn.state.rest)
+
+      assert.same({ fourth = 0, numerator = 0, denominator = 1 }, fn.state.rest[1].begin)
+      assert.same({ fourth = 0, numerator = 4, denominator = 2 }, fn.state.rest[1].duration)
+      assert.are.equal(2, fn.state.rest[1].coroutine)
+
+      assert.same({ fourth = 0, numerator = 0, denominator = 1 }, fn.state.rest[2].begin)
+      assert.same({ fourth = 0, numerator = 4, denominator = 1 }, fn.state.rest[2].duration)
+      assert.are.equal(1, fn.state.rest[2].coroutine)
+
+      -- Coroutines list in state
+      assert.is_not_nil(fn.state.coroutines)
+      assert.are.equal(2, #fn.state.coroutines)
+    end)
+
+    it("should set coroutine field on Accel and AccelEnd, but not on BPM or Beat", function()
+      fn.init()
+      Concurrently(
+        function()
+          BPM(160)
+          Beat({ { 4, 4, 4, 4 } })
+          Accel(180)
+          Step(1, 4)
+          AccelEnd(200)
+        end,
+        function()
+          Accel(120)
+          Step(2, 4)
+        end
+      )
+
+      assert.is_nil(fn.state.bpmChanges[1].coroutine)
+      assert.is_nil(fn.state.signature[1].coroutine)
+
+      assert.are.equal(1, fn.state.speedChanges[1].coroutine)
+      assert.are.equal(180, fn.state.speedChanges[1].bpm)
+
+      assert.are.equal(2, fn.state.speedChanges[2].coroutine)
+      assert.are.equal(120, fn.state.speedChanges[2].bpm)
+
+      assert.are.equal(1, fn.state.speedChanges[3].coroutine)
+      assert.are.equal(200, fn.state.speedChanges[3].bpm)
+    end)
+
+    it("should handle multiple interleaved steps across 3 coroutines", function()
+      fn.init()
+      Concurrently(
+        function()
+          Note(1, 0, 0, false) -- 0
+          Step(3, 4) -- yields 3
+          Note(2, 0, 0, false) -- 3
+        end,
+        function()
+          Note(3, 0, 0, false) -- 0
+          Step(1, 4) -- yields 1
+          Note(4, 0, 0, false) -- 1
+          Step(1, 4) -- yields 2
+          Note(5, 0, 0, false) -- 2
+          Step(2, 4) -- yields 4
+          Note(6, 0, 0, false) -- 4
+        end,
+        function()
+          Note(7, 0, 0, false) -- 0
+          Step(2, 4) -- yields 2
+          Note(8, 0, 0, false) -- 2
+        end
+      )
+
+      assert.same({ fourth = 4, numerator = 0, denominator = 1 }, fn.state.step)
+      assert.are.equal(8, #fn.state.notes)
+
+      local hitXSequence = {}
+      for _, note in ipairs(fn.state.notes) do
+        table.insert(hitXSequence, note.hitX)
+      end
+      assert.same({ 1, 3, 7, 4, 5, 8, 2, 6 }, hitXSequence)
+    end)
+
+    it("should support standalone coroutines created outside Concurrently", function()
+      fn.init()
+      local co = coroutine.create(function()
+        Note(10, 1, 3, false)
+        Step(1, 4)
+        Note(20, 1, 3, false)
+      end)
+
+      -- First resume: runs until Step() yields scheduled step
+      local ok, yieldStep = coroutine.resume(co)
+      assert.is_true(ok)
+      assert.same({ fourth = 1, numerator = 0, denominator = 1 }, yieldStep)
+      assert.are.equal(1, #fn.state.notes)
+      assert.are.equal(1, fn.state.notes[1].coroutine)
+      assert.are.equal(10, fn.state.notes[1].hitX)
+      -- State step is not yet updated before yield resumes
+      assert.same({ fourth = 0, numerator = 0, denominator = 1 }, fn.state.step)
+      assert.are.equal(0, #fn.state.rest)
+
+      -- Second resume: finishes Step() and runs rest of function
+      local ok2 = coroutine.resume(co)
+      assert.is_true(ok2)
+      assert.same({ fourth = 1, numerator = 0, denominator = 1 }, fn.state.step)
+      assert.are.equal(1, #fn.state.rest)
+      assert.are.equal(1, fn.state.rest[1].coroutine)
+      assert.same({ fourth = 0, numerator = 0, denominator = 1 }, fn.state.rest[1].begin)
+      assert.same({ fourth = 0, numerator = 4, denominator = 4 }, fn.state.rest[1].duration)
+      assert.are.equal(2, #fn.state.notes)
+      assert.are.equal(1, fn.state.notes[2].coroutine)
+      assert.are.equal(20, fn.state.notes[2].hitX)
+      assert.same({ fourth = 1, numerator = 0, denominator = 1 }, fn.state.notes[2].step)
+    end)
+
+    it("should validate arguments in Concurrently", function()
+      assert.has_error(function()
+        Concurrently("not a function")
+      end, "invalid argument for Concurrently()")
+
+      -- 0 arguments should safely do nothing
+      fn.init()
+      Concurrently()
+      assert.same({ fourth = 0, numerator = 0, denominator = 1 }, fn.state.step)
+    end)
+
+    it("should rethrow errors occurring inside a concurrent coroutine", function()
+      fn.init()
+      assert.has_error(function()
+        Concurrently(
+          function()
+            Note(1, 0, 0, false)
+            error("test error inside coroutine")
+          end
+        )
+      end)
+    end)
+
+    it("should correctly handle Static functions and AccelBegin in coroutines", function()
+      fn.init()
+      Concurrently(
+        function()
+          NoteStatic(10, 1, 1, 3, true, true)
+          AccelBeginStatic(11, 200)
+          StepStatic(12, 1, 4)
+          AccelEndStatic(13, 220)
+        end,
+        function()
+          AccelBegin(150)
+          Step(1, 4)
+        end
+      )
+
+      assert.are.equal(10, fn.state.notes[1].luaLine)
+      assert.are.equal(1, fn.state.notes[1].coroutine)
+
+      assert.are.equal(11, fn.state.speedChanges[1].luaLine)
+      assert.are.equal(1, fn.state.speedChanges[1].coroutine)
+      assert.is_false(fn.state.speedChanges[1].interp)
+
+      assert.are.equal(2, fn.state.speedChanges[2].coroutine)
+      assert.are.equal(150, fn.state.speedChanges[2].bpm)
+
+      assert.are.equal(13, fn.state.speedChanges[3].luaLine)
+      assert.are.equal(1, fn.state.speedChanges[3].coroutine)
+      assert.is_true(fn.state.speedChanges[3].interp)
+
+      assert.are.equal(12, fn.state.rest[1].luaLine)
+      assert.are.equal(1, fn.state.rest[1].coroutine)
+      assert.are.equal(2, fn.state.rest[2].coroutine)
+    end)
+
+    it("should handle Concurrently starting from non-zero step", function()
+      fn.init()
+      Step(2, 4) -- advance to step 2
+      assert.same({ fourth = 2, numerator = 0, denominator = 1 }, fn.state.step)
+
+      Concurrently(
+        function()
+          Note(1, 0, 0, false) -- step 2
+          Step(1, 4) -- step 3
+          Note(2, 0, 0, false) -- step 3
+        end,
+        function()
+          Note(3, 0, 0, false) -- step 2
+          Step(2, 4) -- step 4
+          Note(4, 0, 0, false) -- step 4
+        end
+      )
+
+      assert.same({ fourth = 4, numerator = 0, denominator = 1 }, fn.state.step)
+
+      assert.same({ fourth = 2, numerator = 0, denominator = 1 }, fn.state.notes[1].step)
+      assert.same({ fourth = 2, numerator = 0, denominator = 1 }, fn.state.notes[2].step)
+      assert.same({ fourth = 3, numerator = 0, denominator = 1 }, fn.state.notes[3].step)
+      assert.same({ fourth = 4, numerator = 0, denominator = 1 }, fn.state.notes[4].step)
+    end)
+
+    it("should handle nested Concurrently calls", function()
+      fn.init()
+      Concurrently(
+        function()
+          Note(1, 0, 0, false)
+          Concurrently(
+            function()
+              Note(2, 0, 0, false)
+              Step(1, 4)
+              Note(3, 0, 0, false)
+            end,
+            function()
+              Note(4, 0, 0, false)
+              Step(2, 4)
+              Note(5, 0, 0, false)
+            end
+          )
+        end,
+        function()
+          Note(6, 0, 0, false)
+          Step(1, 4)
+          Note(7, 0, 0, false)
+        end
+      )
+
+      assert.same({ fourth = 3, numerator = 0, denominator = 1 }, fn.state.step)
+      -- Each coroutine gets a unique index
+      assert.are.equal(4, #fn.state.coroutines)
+    end)
+  end)
 end)
+
