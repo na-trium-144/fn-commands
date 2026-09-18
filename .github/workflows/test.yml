@@ -30,3 +30,27 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           version: latest # NOTE: we recommend pinning to a specific version in case of formatting changes
           args: --check .
+
+  test-nikochan-main:
+    runs-on: ubuntu-latest
+    env:
+      MONGODB_URI: mongodb://localhost:27017
+      API_ENV: development
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        repository: na-trium-144/falling-nikochan
+        ref: main
+    - uses: actions/checkout@v6
+      with:
+        path: fn-commands
+    - uses: pnpm/action-setup@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 24.x
+        cache: 'pnpm'
+    - run: pnpm install --frozen-lockfile
+    - run: pnpm link $(pwd)/fn-commands
+    - run: pnpm run mongo-docker
+    - run: pnpm run test
+
